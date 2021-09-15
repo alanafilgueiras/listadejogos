@@ -21,19 +21,39 @@
            }
         </style>
     </head>
-<body>
-    <div id="body">
-        <?php
-            $u= $_POST['usuario']?? null;
-            $s= $_POST['senha']?? null;
+    <body>
+        <div id="body">
+            <?php
+                $u= $_POST['usuario']?? null;
+                $s= $_POST['senha']?? null;
 
-            if (is_null($u)|| is_null($s)) {  
-                require "user-login-form.php";
-            }else {
-                echo "Dados foram passados...";
-        }
-        ?>
-
-    </div>
-</body>
+                if (is_null($u) || is_null($s)) {  
+                    require "user-login-form.php";
+                }else {
+                    $q= "SELECT usuario, nome, senha , tipo FROM usuarios WHERE usuario = '$u' LIMIT 1";
+                    $busca = $banco->query($q);
+                    if(!$busca){
+                        echo msg_erro('Falha ao acessar o banco');
+                    }else {
+                        if ($busca->num_rows>0){
+                            $reg = $busca->fetch_object();                                                  
+                            if(testarHash($s, $reg->senha)){
+                                echo msg_sucesso('logado com sucesso');
+                            $_SESSION['user'] = $reg->usuario;
+                            $_SESSION['nome'] = $reg->nome;
+                            $_SESSION['tipo'] = $reg->tipo;
+                        }else{
+                            echo msg_erro('senha inválida');
+                            
+                        }                      
+                            
+                    }else{
+                        echo msg_erro('Usuario inválido');
+                    }
+                }
+            }
+            echo voltar();
+           ?>
+        </div>
+    </body>
 </html>

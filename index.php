@@ -59,9 +59,7 @@
 				if (!$busca){
 					echo "<tr><td>Infelizmente essa busca deu errado</p>";
 				} else {
-					if($busca->num_rows == 0){
-						echo "<tr><td>Nenhum registro encontrado</p>";
-					} else {
+					if($busca->num_rows > 0){
 						while($reg=$busca->fetch_object()){
 							$t = thumb ($reg->capa);
 							echo "<tr><td><img src= '$t' 
@@ -69,8 +67,14 @@
 							echo "<td><a href= 'detalhes.php?cod=$reg->cod'	>$reg->nome</a>";
 							echo " [$reg->genero]";
 							echo "<br/>$reg->produtora";
-							echo "<td>Adm";
+							if (is_admin()){
+							echo "<td><span class='material-icons'>add_circle</span> <span class='material-icons'>edit</span> <span class='material-icons'>delete</span>";
+							}elseif (is_editor()){
+								echo "<td><span class='material-icons'>edit</span>";
 						}
+					}
+					}else{
+						echo "<nenhum dado foi passado...</p>";
 					}	
 					
 				}	

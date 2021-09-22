@@ -22,13 +22,16 @@
                 if(!isset($_POST['usuario'])){
                     include "user-edit-form.php";
                 }else{
-                    msg_sucesso("dados foram passados");
+                    echo msg_sucesso("dados foram passados");
                 }
+                echo voltar();
             }
         ?>
 
     </div>
     
-    
+        <?php
+        require_once "rodape.php";
+        ?>
     </body>
 </html>

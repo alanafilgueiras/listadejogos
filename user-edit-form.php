@@ -1,4 +1,4 @@
-<h1>Alteração de Dados</h1>
+ <h1>Alteração de Dados</h1>
 <form action="user-edit.php" method="post">
     <table>
         <tr><td>Usuário

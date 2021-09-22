@@ -2,9 +2,9 @@
 session_start();
 
 if(!isset($_SESSION['user'])){
-$_SESSION['user'] = "";
-$_SESSION['nome'] = "";
-$_SESSION['tipo'] = "";
+    $_SESSION['user'] = "";
+    $_SESSION['nome'] = "";
+    $_SESSION['tipo'] = "";
 }
 
 function cripto ($senha){
@@ -22,14 +22,19 @@ function gerarHash($senha){
     return $hash;
 }
 function testarHash($senha, $hash){
-    $senha_hash = md5($senha);
+    $ok= password_verify(cripto($senha), $hash);
+    return $ok;
+}
+/*function testarHash($senha, $hash){
+    $senha_hash = hash('md5', $senha);
     if($senha_hash === $hash){
         return true;
     }else {
         return false;
     }
     
-}
+}*/
+
 function logout(){
     unset($_SESSION['user']);
     unset($_SESSION['nome']);
